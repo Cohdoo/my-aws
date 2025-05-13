@@ -1,12 +1,13 @@
 #!/bin/zsh
 
-USER_DATA_PATH="/usr/local/bin/my-aws"
-USER_SELECTED_PATH="$USER_DATA_PATH"/usr-files/selected.txt
-USER_PROFILE_PATH="$USER_DATA_PATH"/usr-files/profile.txt
+SRC_PATH="/usr/local/bin/myaws"
+SELECTED_PATH="$HOME/.myaws/selected"
+PROFILE_PATH="$HOME/.myaws/profile"
+TEMP_PATH="$HOME/.myaws/temp"
 
-source "$USER_DATA_PATH"/src/file-managment.sh
-source "$USER_DATA_PATH"/src/profile-logs.sh
-source "$USER_DATA_PATH"/src/s3upload.sh
+source "$SRC_PATH/file-managment.sh"
+source "$SRC_PATH/profile-logs.sh"
+source "$SRC_PATH/s3upload.sh"
 
 usage()
 {
@@ -51,7 +52,7 @@ case "$program" in
     "list")
         echo "selected files: "
         echo ""
-        cat "$USER_SELECTED_PATH"
+        cat "$SELECTED_PATH"
         echo ""
         echo "You can add files using \"myaws add <file path>\""
         echo "and remove files using \"myaws remove <file path>\""

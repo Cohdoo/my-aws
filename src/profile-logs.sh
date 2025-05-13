@@ -37,15 +37,14 @@ delete-log()
 
 updateProfile()
 {
-    echo "Current aws sso profile is $(cat $USER_PROFILE_PATH)"
+    echo "Current aws sso profile is $(cat $PROFILE_PATH)"
     echo -n "Do you want to change profile? (y/n) "
     read answer
     if ! [[ "$answer[1]" == "y" ]]; then
         return
     fi
-    
     echo -n "Enter new aws sso profile: "
     read newProfile
     echo "updated profile to $newProfile"
-    print "$newProfile" > $USER_PROFILE_PATH
+    print "$newProfile" > $PROFILE_PATH
 }

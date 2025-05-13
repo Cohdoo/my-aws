@@ -18,9 +18,9 @@ uploadOptionSelected()
     fi
 
     # get array of the paths to all the selected files, and upload each file
-    selectedfiles_array=("${(f)$(< "$USER_SELECTED_PATHH")}")
+    selectedfiles_array=("${(f)$(< "$SELECTED_PATHH")}")
     for file in "${selectedfiles_array[@]}"; do
-        aws s3 cp "$file" "$bucketname" --recursive --profile "$(cat "$USER_PROFILE_PATH")"
+        aws s3 cp "$file" "$bucketname" --recursive --profile "$(cat "$PROFILE_PATH")"
     done
 }
 
@@ -46,5 +46,5 @@ uploadOptionChanged()
     fi
 
     # upload all changed files in current directory to the bucket
-    aws s3 sync "$PWD" "$bucketname" --profile "$(cat "$USER_PROFILE_PATH")"
+    aws s3 sync "$PWD" "$bucketname" --profile "$(cat "$PROFILE_PATH")"
 }
