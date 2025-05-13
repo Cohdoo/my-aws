@@ -2,18 +2,3 @@ aws s3 cp /file-path/ s3://bucket-path/ --recursive --profile  my-ss0-profile
 
 Figure out where it should get installed at and make a quick installer once farther along
 Then if needed use the path variable thing
-
-
-WORKS:
-
-help
-list
-create-log 
-delete-log
-add
-remove
-profile
-
-DOES NOT WORK:
-
-upload

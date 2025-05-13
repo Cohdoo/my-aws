@@ -28,7 +28,7 @@ usage()
     echo "  myaws upload <option> <bucket>  uploads files to aws s3"
     echo "      options:"
     echo "          --selected              uploads files that are currently selected, view file with myaws list"
-    echo "          --changed               uploads all files in current directory that have been changed since last upload"
+    echo "          --changes               uploads all files in current directory that have been changed since last upload"
     echo "      bucket:"
     echo "          Specify a s3 bucket to upload to using the format s3://bucket-path/"
     echo "          Or, if a myaws log has been created in the directory, no need to specify"
@@ -88,7 +88,7 @@ case "$program" in
 
         if [[ "$2" == "--selected" ]]; then
             uploadOptionSelected "$3"
-        elif [[ "$2" == "--changed" ]]; then
+        elif [[ "$2" == "--changes" ]]; then
             uploadOptionChanged "$3"
         else
             usage
