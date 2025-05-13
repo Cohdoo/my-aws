@@ -1,0 +1,2 @@
+/Users/cohenrussell/Code/Scripts/my-aws/README.md
+/Users/cohenrussell/Code/Scripts/my-aws/src
