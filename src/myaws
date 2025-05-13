@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-USER_DATA_PATH="/urs/local/bin/my-aws"
+USER_DATA_PATH="/usr/local/bin/my-aws"
 USER_SELECTED_PATH="$USER_DATA_PATH"/usr-files/selected.txt
 USER_PROFILE_PATH="$USER_DATA_PATH"/usr-files/profile.txt
 
