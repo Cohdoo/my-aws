@@ -1,0 +1,6 @@
+aws s3 cp /file-path/ s3://bucket-path/ --recursive --profile my-sso-profile
+
+FIX ISSUE OF NOT KNOWING WHERE ITS INSTALLED AT
+
+create-log method works
+delete-log method works
