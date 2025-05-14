@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-SRC_PATH="/usr/local/bin/myaws"
+SRC_PATH="/usr/local/bin/my-aws"
 SELECTED_PATH="$HOME/.myaws/selected"
 PROFILE_PATH="$HOME/.myaws/profile"
 TEMP_PATH="$HOME/.myaws/temp"

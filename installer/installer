@@ -1,0 +1,43 @@
+#!/bin/zsh
+
+SRC_FILES="../src"
+
+GLOBAL_MYAWS="/usr/local/bin/my-aws"
+LOCAL_MYAWS="$HOME/.myaws"
+
+ZPROFILE="$HOME/.zprofile"
+PROFILE="$LOCAL_MYAWS/profile"
+
+addfiles()
+{
+    mkdir -p "$GLOBAL_MYAWS"
+    cp "$SRC_FILES/file-managment.sh" "$GLOBAL_MYAWS"
+    cp "$SRC_FILES/myaws" "$GLOBAL_MYAWS"
+    cp "$SRC_FILES/profile-logs.sh" "$GLOBAL_MYAWS"
+    cp "$SRC_FILES/s3upload.sh" "$GLOBAL_MYAWS"
+
+    mkdir -p "$LOCAL_MYAWS"
+    touch "$LOCAL_MYAWS/temp"
+    touch "$LOCAL_MYAWS/profile"
+    touch "$LOCAL_MYAWS/selected"
+}
+
+addPath()
+{
+    print "# Added by my-aws installer" >> "$ZPROFILE"
+    print 'export PATH="$PATH:/usr/local/bin/my-aws"' >> "$ZPROFILE"
+    print "" >> "$ZPROFILE"
+}
+
+echo "installing files ..."
+addfiles
+echo "updating paths ..."
+addPath
+echo "For any myaws upload commands to work, you must be signed into"
+echo "aws cli with the same profile saved in myaws config, which you"
+echo "can change at any time by running myaws profile."
+echo -n "Enter profile to run aws cli commands with: "
+read profileName
+print "$profileName" > "$PROFILE"
+echo "Installation and setup complete. Run myaws help to see full list of commands."
+exit 0
