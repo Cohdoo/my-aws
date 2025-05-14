@@ -1,13 +1,16 @@
 #!/bin/zsh
 
-SRC_PATH="/usr/local/bin/my-aws"
-SELECTED_PATH="$HOME/.myaws/selected"
-PROFILE_PATH="$HOME/.myaws/profile"
-TEMP_PATH="$HOME/.myaws/temp"
+MAIN_DIR="$HOME/.myaws"
+SCRIPTS_DIR="$MAIN_DIR/scripts"
+USRFILES_DIR="$MAIN_DIR/usr-files"
 
-source "$SRC_PATH/file-managment.sh"
-source "$SRC_PATH/profile-logs.sh"
-source "$SRC_PATH/s3upload.sh"
+SELECTED_PATH="$USRFILES_DIR/selected"
+PROFILE_PATH="$USRFILES_DIR/profile"
+TEMP_PATH="$USRFILES_DIR/temp"
+
+source "$SCRIPTS_DIR/file-managment.sh"
+source "$SCRIPTS_DIR/profile-logs.sh"
+source "$SCRIPTS_DIR/s3upload.sh"
 
 usage()
 {

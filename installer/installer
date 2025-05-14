@@ -2,30 +2,37 @@
 
 SRC_FILES="../src"
 
-GLOBAL_MYAWS="/usr/local/bin/my-aws"
-LOCAL_MYAWS="$HOME/.myaws"
+MAIN_DIR="$HOME/.myaws"
+SCRIPTS_DIR="$MAIN_DIR/scripts"
+USRFILES_DIR="$MAIN_DIR/usr-files"
 
 ZPROFILE="$HOME/.zprofile"
-PROFILE="$LOCAL_MYAWS/profile"
+PROFILE="$USRFILES_DIR/profile"
 
 addfiles()
 {
-    mkdir -p "$GLOBAL_MYAWS"
-    cp "$SRC_FILES/file-managment.sh" "$GLOBAL_MYAWS"
-    cp "$SRC_FILES/myaws" "$GLOBAL_MYAWS"
-    cp "$SRC_FILES/profile-logs.sh" "$GLOBAL_MYAWS"
-    cp "$SRC_FILES/s3upload.sh" "$GLOBAL_MYAWS"
+    mkdir -p "$MAIN_DIR"
+    mkdir -p "$SCRIPTS_DIR"
+    mkdir -p "$USRFILES_DIR"
 
-    mkdir -p "$LOCAL_MYAWS"
-    touch "$LOCAL_MYAWS/temp"
-    touch "$LOCAL_MYAWS/profile"
-    touch "$LOCAL_MYAWS/selected"
+    cp "$SRC_FILES/file-managment.sh" "$SCRIPTS_DIR"
+    cp "$SRC_FILES/myaws" "$SCRIPTS_DIR"
+    cp "$SRC_FILES/profile-logs.sh" "$SCRIPTS_DIR"
+    cp "$SRC_FILES/s3upload.sh" "$SCRIPTS_DIR"
+
+    touch "$USRFILES_DIR/temp"
+    touch "$USRFILES_DIR/profile"
+    touch "$USRFILES_DIR/selected"
+
+    chmod g+w "$USRFILES_DIR/temp"
+    chmod g+w "$USRFILES_DIR/profile"
+    chmod g+w "$USRFILES_DIR/selected"
 }
 
 addPath()
 {
     print "# Added by my-aws installer" >> "$ZPROFILE"
-    print 'export PATH="$PATH:/usr/local/bin/my-aws"' >> "$ZPROFILE"
+    print 'export PATH="$PATH:$HOME/.myaws/scripts"' >> "$ZPROFILE"
     print "" >> "$ZPROFILE"
 }
 
@@ -40,4 +47,5 @@ echo -n "Enter profile to run aws cli commands with: "
 read profileName
 print "$profileName" > "$PROFILE"
 echo "Installation and setup complete. Run myaws help to see full list of commands."
+source "$ZPROFILE"
 exit 0
