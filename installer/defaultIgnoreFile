@@ -1,0 +1,5 @@
+.git/*
+.gitignore
+.my-aws/*
+.vscode/*
+.DS_Store

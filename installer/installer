@@ -1,13 +1,14 @@
 #!/bin/zsh
 
-SRC_FILES="../src"
+readonly SRC_FILES="../src"
+readonly INSTALLER_FILES="../installer"
 
-MAIN_DIR="$HOME/.myaws"
-SCRIPTS_DIR="$MAIN_DIR/scripts"
-USRFILES_DIR="$MAIN_DIR/usr-files"
+readonly MAIN_DIR="$HOME/.myaws"
+readonly SCRIPTS_DIR="$MAIN_DIR/scripts"
+readonly USRFILES_DIR="$MAIN_DIR/usr-files"
 
-ZPROFILE="$HOME/.zprofile"
-PROFILE="$USRFILES_DIR/profile"
+readonly ZPROFILE="$HOME/.zprofile"
+readonly PROFILE="$USRFILES_DIR/profile"
 
 addfiles()
 {
@@ -23,6 +24,7 @@ addfiles()
     touch "$USRFILES_DIR/temp"
     touch "$USRFILES_DIR/profile"
     touch "$USRFILES_DIR/selected"
+    cp "$INSTALLER_FILES/defaultIgnoreFile" "$USRFILES_DIR/ignore"
 
     chmod g+w "$USRFILES_DIR/temp"
     chmod g+w "$USRFILES_DIR/profile"

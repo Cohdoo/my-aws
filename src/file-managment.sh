@@ -5,11 +5,14 @@ addFile ()
     # check to see if a valid file or directory
     if [[ -d "$1" ]] || [[ -f "$1" ]]; then
         fullPath=$(realpath "$1") 
+        # check if already in selected
         if grep -qFx "$fullPath" "$SELECTED_PATH"; then
-            # already in selected
             echo "$1" already in selected files list
             return
         fi
+
+        # check if its a file to be ignored
+
         # add to selected
         print "$fullPath" >> "$SELECTED_PATH"
         echo /"$1" added to selected files

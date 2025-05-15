@@ -1,25 +1,27 @@
 #!/bin/zsh
 
-MAIN_DIR="$HOME/.myaws"
-SCRIPTS_DIR="$MAIN_DIR/scripts"
-USRFILES_DIR="$MAIN_DIR/usr-files"
+readonly MAIN_DIR="$HOME/.myaws"
+readonly SCRIPTS_DIR="$MAIN_DIR/scripts"
+readonly USRFILES_DIR="$MAIN_DIR/usr-files"
 
-SELECTED_PATH="$USRFILES_DIR/selected"
-PROFILE_PATH="$USRFILES_DIR/profile"
-TEMP_PATH="$USRFILES_DIR/temp"
+readonly SELECTED_PATH="$USRFILES_DIR/selected"
+readonly PROFILE_PATH="$USRFILES_DIR/profile"
+readonly TEMP_PATH="$USRFILES_DIR/temp"
+readonly IGNORE_PATH="$USRFILES_DIR/ignore"
 
 source "$SCRIPTS_DIR/file-managment.sh"
 source "$SCRIPTS_DIR/profile-logs.sh"
 source "$SCRIPTS_DIR/s3upload.sh"
+source "$HOME/.zprofile"
 
 usage()
 {
     echo "\033[1mDescription:\033[0m"
     echo "  This is a program to help make uploading files to aws s3 buckets easier"
-    echo "  Running \"myaws create-log\" in the root"
-    echo "  folder of the repo will create a log, removing the need to manauly add files"
-    echo "  and specify the bucket each time. Instead, only the files"
-    echo "  that have been changed since last upload will be uploaded again."
+    echo "  Running \"myaws create-log\" in the root folder of the repo will create a log,"
+    echo "  removing the need to manauly add files and specify the bucket each time."
+    echo "  Additionlly, any files or directories listed in either the global or local ignore"
+    echo "  file will be ignored when uploading to aws s3."
     echo ""
     echo "\033[1mUsage:\033[0m"
     echo "  myaws help                      displays help menu"
@@ -29,10 +31,14 @@ usage()
     echo "  myaws delete-log                deletes any logs setup in the directory"
     echo "  myaws add <file path>           adds a file or folder to being selected"
     echo "  myaws remove <file path>        removes a file or folder from being selected"
+    echo "  myaws ignore-list <option>      view ignore file"
+    echo "      option:"
+    echo "          -g | --global               lists all files or directories in the global ignore list"
+    echo "          -l | --local                lists all files or directories in the local ignore list"
     echo "  myaws upload <option> <bucket>  uploads files to aws s3"
-    echo "      options:"
-    echo "          --selected              uploads files that are currently selected, view file with myaws list"
-    echo "          --changes               uploads all files in current directory that have been changed since last upload"
+    echo "      option:"
+    echo "          -s | --selected              uploads files that are currently selected, view file with myaws list"
+    echo "          -c | --changed               uploads all files in current directory that have been changed since last upload"
     echo "      bucket:"
     echo "          Specify a s3 bucket to upload to using the format s3://bucket-path/"
     echo "          Or, if a myaws log has been created in the directory, no need to specify"
@@ -47,7 +53,7 @@ program="$1"
 
 case "$program" in
 
-    "help"|"-h"|"--help")
+    "help" | "-h" | "--help")
         usage
         exit 0
     ;;
@@ -83,6 +89,39 @@ case "$program" in
         removeFile "$2"
     ;;
 
+    "ignore-list")
+        if ! [[ $# -eq 2 ]]; then
+            usage
+            exit 1
+        fi
+
+        if [[ "$2" == "--global" ]] || [[ "$2" == "-g" ]]; then
+            cat "$IGNORE_PATH"
+            echo""
+            echo "You can edit the file here $IGNORE_PATH"
+        elif [[ "$2" == "--local" ]] || [[ "$2" == "-l" ]]; then
+            LOCAL_IGNORE_PATH=""
+            if [[ -d "./.my-aws" ]]; then
+                LOCAL_IGNORE_PATH="./.my-aws/ignore"
+            elif [[ -d "../.my-aws" ]]; then
+                LOCAL_IGNORE_PATH="../.my-aws/ignore"
+            elif [[ -d "../../.my-aws" ]]; then
+                LOCAL_IGNORE_PATH="../../.my-aws/ignore"
+            elif [[ -d "../../../.my-aws" ]]; then
+                LOCAL_IGNORE_PATH="../../../.my-aws/ignore"
+            else
+                echo "no local ignore or log found"
+                exit 1
+            fi
+            cat "$LOCAL_IGNORE_PATH"
+            echo ""
+            echo "You can edit the file here $LOCAL_IGNORE_PATH"
+        else
+            usage
+            exit 1
+        fi    
+    ;;
+
     "upload")
         # check for to many or not enough args. Should be between 2-3 args
         if [[ $# -gt 3 ]] || [[ $# -eq 1 ]]; then
@@ -90,9 +129,9 @@ case "$program" in
             exit 1
         fi
 
-        if [[ "$2" == "--selected" ]]; then
+        if [[ "$2" == "--selected" ]] || [[ "$2" == "-s" ]]; then
             uploadOptionSelected "$3"
-        elif [[ "$2" == "--changes" ]]; then
+        elif [[ "$2" == "--changed" ]] || [[ "$2" == "-c" ]]; then
             uploadOptionChanged "$3"
         else
             usage
@@ -121,3 +160,5 @@ case "$program" in
         exit 1
     ;;
 esac
+
+exit 0

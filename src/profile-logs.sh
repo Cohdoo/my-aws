@@ -11,6 +11,7 @@ create-log()
     # make the directory and files
     mkdir ./.my-aws
     touch ./.my-aws/head
+    touch ./.my-aws/ignore
 
     # get user data for what to put into files
     echo "Enter the name of the bucket to associate this directory with."
@@ -19,6 +20,7 @@ create-log()
     
     # put data into the files
     print "$inHead" > ./.my-aws/head
+    echo "you can add local ignore files by running aws ignore-list --local"
     echo "Log created"
 }
 
