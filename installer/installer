@@ -29,6 +29,7 @@ addfiles()
     chmod g+w "$USRFILES_DIR/temp"
     chmod g+w "$USRFILES_DIR/profile"
     chmod g+w "$USRFILES_DIR/selected"
+    chmod g+w "$USRFILES_DIR/ignore"
 }
 
 addPath()
