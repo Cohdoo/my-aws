@@ -1,1 +1,38 @@
+# macOS system files
 .DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Editor/IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# AWS and tool specific
+.aws/
+.my-aws/
+*.pem
+*.key
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Logs and runtime files
+*.log
+.env
+.env.local
+
+# Test files
+test/
+*.test
+*.spec
+
+# Temporary files
+*.tmp
+.temp/
+temp/
