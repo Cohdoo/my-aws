@@ -1,7 +1,6 @@
-# my-aws
+# my-aws **MAC ONLY**
 Scripts to make my life of uploading stuff to aws s3 easier and faster
 
-----------------MAC ONLY----------------
 To install, run sudo ./installer from inside the installer directory
 The command to run is 'myaws'
 
